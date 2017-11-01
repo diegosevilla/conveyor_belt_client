@@ -1,0 +1,30 @@
+[11/1/2017  11:32 am] - diegosevilla Select RESULT: [200] : successfully selected this controller
+[11/1/2017  11:32 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [200] : Conveyor now running 1.5
+[11/1/2017  11:32 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [200] : Conveyor now running 3
+[11/1/2017  11:32 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [400] : Error! Will exceed the maximum distance of 3
+[11/1/2017  11:40 am] - diegosevilla Select RESULT: [200] : successfully selected this controller
+[11/1/2017  11:40 am] - diegosevilla stopped the controller RESULT: [400] : Controller already stopped
+[11/1/2017  11:40 am] - diegosevilla stopped the controller RESULT: [400] : Controller already stopped
+[11/1/2017  11:40 am] - diegosevilla stopped the controller RESULT: [400] : Controller already stopped
+[11/1/2017  11:40 am] - diegosevilla stopped the controller RESULT: [400] : Controller already stopped
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 1.0 forward RESULT: [200] : Conveyor now at 1
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 1.0 forward RESULT: [200] : Conveyor now at 2
+[11/1/2017  11:40 am] - diegosevilla set direction to Reverse RESULT: [200] : Reverse operation successfully executed
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 1.5
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 1
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 0.5
+[11/1/2017  11:40 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 0
+[11/1/2017  11:40 am] - diegosevilla set direction to Forward RESULT: [200] : Forward operation successfully executed
+[11/1/2017  11:42 am] - diegosevilla Select RESULT: [200] : successfully selected this controller
+[11/1/2017  11:43 am] - diegosevilla Select RESULT: [200] : successfully selected this controller
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 0.5 forward RESULT: [200] : Conveyor now at 0.5m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 0.5 forward RESULT: [200] : Conveyor now at 1.0m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [200] : Conveyor now at 2.5m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [400] : Error! Will exceed the maximum distance of 3
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 1.5 forward RESULT: [400] : Error! Will exceed the maximum distance of 3
+[11/1/2017  11:43 am] - diegosevilla set direction to Reverse RESULT: [200] : Reverse operation successfully executed
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 1.0 reverse RESULT: [200] : Conveyor now at 1.5m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 1.0m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 0.5m
+[11/1/2017  11:43 am] - diegosevilla moved Conveyor 0.5 reverse RESULT: [200] : Conveyor now at 0.0m
+[11/1/2017  11:43 am] - diegosevilla stopped the controller RESULT: [400] : Controller already stopped
