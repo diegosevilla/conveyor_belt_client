@@ -1,0 +1,17 @@
+{
+  "name": "conveyor-belt-client",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "build": "babel src -d build"
+  },
+  "dependencies": {
+    "express": "~4.15.2",
+    "socket.io-client": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
