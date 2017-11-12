@@ -1,2 +1,6 @@
 #ignore logs files
 logs.txt
+
+
+#ignore node_modules
+node_modules/
