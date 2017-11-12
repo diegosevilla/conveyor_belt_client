@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://192.168.8.108:3000');
+var socket = require('socket.io-client')('http://10.11.223.153:3000');
 var fs = require('fs');
 
 var controller = {};
@@ -18,6 +18,20 @@ socket.on('connect', function(){
 
 socket.on('index', function(index){
 	console.log('i am controller #' + index);
+});
+
+socket.on('logs', function(fn){
+	fs.readFile('logs.txt', 'utf8', function(err, data){
+		var res = {};
+		if(err){
+			res.status = 400;
+			res.body = err;
+		} else {
+			res.status = 200;
+			res.body = data.split('\n');
+		}
+		fn(res);
+	})
 });
 
 socket.on('select', function(data, fn){
@@ -205,13 +219,12 @@ function setDistance(n){
 }
 
 function writeToFile(user, operation, time, status, message){
-	var str = '[' + time + '] - ' + user + ' ' + operation + ' RESULT: [' + status + '] : ' + message + '\n';
+	var str = '[' + time + '] - ' + user + ' ' + operation + ';RESULT: [' + status + '] : ' + message + '\n';
 	console.log(str);
 	fs.appendFile('logs.txt', str, function (err) {
 	  if (err) throw err;
 	});
 }
-
 
 function formatDate(date) {
   var hours = date.getHours();
