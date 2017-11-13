@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://10.11.223.153:3000');
+var socket = require('socket.io-client')('https://conveyor-belt-controller.herokuapp.com');
 var fs = require('fs');
 
 var controller = {};
