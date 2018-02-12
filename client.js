@@ -1,13 +1,13 @@
-var socket = require('socket.io-client')('https://conveyor-belt-controller.herokuapp.com');
+var socket = require('socket.io-client')('http://localhost:3000');
 var fs = require('fs');
 
 var controller = {};
 var taken;
-
+var operation = '';
 
 controller.state = 'stop';
 controller.speed = '';
-controller.direction = 'forward';
+controller.direction = '';
 controller.distance = 0;
 
 socket.on('connect', function(){
@@ -36,11 +36,11 @@ socket.on('logs', function(fn){
 
 socket.on('select', function(data, fn){
 	var result;
-		
+
 	if(taken)
 		result = {status:400, message:'controller already taken'};
 	else{
-		result = {status:200, message:'successfully selected this controller'}; 
+		result = {status:200, message:'successfully selected this controller'};
 		taken = true;
 	}
 	console.log(result);
@@ -54,7 +54,7 @@ socket.on('deselect', function(data, fn){
 	if(!taken)
 		result = {status:400, message:data.username + ' is not connected to this controller'};
 	else{
-		result = {status:200, message:'successfully deselected this controller'}; 
+		result = {status:200, message:'successfully deselected this controller'};
 		taken = false;
 	}
 	console.log(result);
@@ -63,17 +63,29 @@ socket.on('deselect', function(data, fn){
 });
 
 socket.on('status', function(fn){
-	fn(controller);			
+	fn(controller);
+});
+
+socket.on('operation', function(data, fn){
+		operation = data.operation;
+		console.log(operation);
+		controller.status = 200;
+		controller.message = '';
+		controller.direction = '';
+		fn(controller);
+		writeToFile(data.username, 'set operation to ' + operation, formatDate(new Date()), controller.status, controller.message);
 });
 
 socket.on('stop', function(data, fn){
 	if(controller.state == 'stop'){
 		controller.status = 400;
 		controller.message = 'Controller already stopped';
-	} else{ 
+		controller.direction = '';
+	} else{
 		controller.status = 200;
 		controller.message = 'Stop operation successfully executed';
 		controller.state = 'stop';
+		controller.direction = '';
 	}
 	fn(controller);
 	writeToFile(data.username, 'stopped the controller', formatDate(new Date()), controller.status, controller.message);
@@ -96,7 +108,7 @@ socket.on('forward', function(data, fn){
 	writeToFile(data.username, 'set direction to Forward', formatDate(new Date()), controller.status, controller.message);
 });
 
-socket.on('reverse', function(data, fn){ 
+socket.on('reverse', function(data, fn){
 	if(controller.direction == 'reverse'){
 		controller.status = 400;
 		controller.message = 'Controller is already in reverse direction';
@@ -114,7 +126,10 @@ socket.on('reverse', function(data, fn){
 });
 
 socket.on('low', function(data, fn){
-	if(controller.state == 'stop'){
+	if(controller.direction == ''){
+		controller.status = 400;
+		controller.message = 'Controller direction not set. Please select direction first';
+	} else if(controller.state == 'stop'){
 		controller.speed = 'low';
 		controller.status = 200;
 		controller.message = 'speed set to low';
@@ -129,7 +144,10 @@ socket.on('low', function(data, fn){
 });
 
 socket.on('med', function(data, fn){
-	if(controller.state == 'stop'){
+	if(controller.direction == ''){
+		controller.status = 400;
+		controller.message = 'Controller direction not set. Please select direction first';
+	} else if(controller.state == 'stop'){
 		controller.speed = 'med';
 		controller.status = 200;
 		controller.message = 'speed set to medium';
@@ -144,7 +162,10 @@ socket.on('med', function(data, fn){
 });
 
 socket.on('high', function(data, fn){
-	if(controller.state == 'stop'){
+	if(controller.direction == ''){
+		controller.status = 400;
+		controller.message = 'Controller direction not set. Please select direction first';
+	} else if(controller.state == 'stop'){
 		controller.speed = 'high';
 		controller.status = 200;
 		controller.message = 'speed set to high';
@@ -207,7 +228,10 @@ function setDistance(n){
 	} else if(controller.direction == 'reverse' && controller.distance - n < 0){
 		controller.status = 400;
 		controller.message = 'Error! Will exceed the minimum distance of 0';
-	} else{
+	} else if(controller.direction == ''){
+		controller.status = 400;
+		controller.message = 'Controller direction not set. Please select direction first';
+	} else {
 		if(controller.direction == 'forward')
 			controller.distance += n;
 		else
