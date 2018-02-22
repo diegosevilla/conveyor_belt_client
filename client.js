@@ -1,5 +1,10 @@
 var socket = require('socket.io-client')('https://conveyor-belt-controller.herokuapp.com');
 var fs = require('fs');
+var SerialPort = require('serialport');
+
+var port = new SerialPort("/dev/ttyACM0", {
+	baudRate: 9600
+});
 
 var controller = {};
 var taken;
@@ -17,8 +22,12 @@ socket.on('connect', function(){
 });
 
 socket.on('index', function(index){
-	console.log('i am controller #' + index);
+	//console.log('i am controller #' + index);
+	console.log('Controller Number: ' + index);
+	console.log('Waiting for input from web...');
 });
+
+port.on('open', function () { });
 
 socket.on('logs', function(fn){
 	fs.readFile('logs.txt', 'utf8', function(err, data){
@@ -88,6 +97,28 @@ socket.on('stop', function(data, fn){
 		controller.direction = '';
 	}
 	fn(controller);
+
+	port.write('S', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('START');
+	});
+
+	port.write('Q', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('STOP');
+	});
+
+	port.write('S', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('START');
+	});
+
 	writeToFile(data.username, 'stopped the controller', formatDate(new Date()), controller.status, controller.message);
 });
 
@@ -104,6 +135,21 @@ socket.on('forward', function(data, fn){
 		controller.direction = 'forward';
 	}
 	console.log(controller);
+
+	port.write('C', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('CONTINOUS');
+	});
+
+	port.write('F', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('FORWARD');
+	});
+
 	fn(controller);
 	writeToFile(data.username, 'set direction to Forward', formatDate(new Date()), controller.status, controller.message);
 });
@@ -122,6 +168,21 @@ socket.on('reverse', function(data, fn){
 	}
 	console.log(controller);
 	fn(controller);
+
+	port.write('C', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('CONTINOUS');
+	});
+
+	port.write('R', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('REVERSE');
+	});
+
 	writeToFile(data.username, 'set direction to Reverse', formatDate(new Date()), controller.status, controller.message);
 });
 
@@ -139,6 +200,14 @@ socket.on('low', function(data, fn){
 		controller.message = 'Controller is running. Please stop first';
 	}
 	console.log(controller);
+
+	port.write('L', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('SPEED: LOW');
+	});
+
 	fn(controller);
 	writeToFile(data.username, 'set Speed to Low', formatDate(new Date()), controller.status, controller.message);
 });
@@ -157,6 +226,14 @@ socket.on('med', function(data, fn){
 		controller.message = 'Controller is running. Please stop first';
 	}
 	console.log(controller);
+
+	port.write('M', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('SPEED: MEDIUM');
+	});
+
 	fn(controller);
 	writeToFile(data.username, 'set Speed to Medium', formatDate(new Date()), controller.status, controller.message);
 });
@@ -175,6 +252,14 @@ socket.on('high', function(data, fn){
 		controller.message = 'Controller is running. Please stop first';
 	}
 	console.log(controller);
+
+	port.write('H', function (err) {
+		if (err) {
+			return console.log('Error on write: ', err.message);
+		}
+		console.log('SPEED: HIGH');
+	});
+
 	fn(controller);
 	writeToFile(data.username, 'set Speed to High', formatDate(new Date()), controller.status, controller.message);
 });
