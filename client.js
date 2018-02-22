@@ -1,5 +1,4 @@
 var socket = require('socket.io-client')('https://conveyor-belt-controller.herokuapp.com');
-//var socket = require('socket.io-client')('http://localhost:3000');
 var fs = require('fs');
 var SerialPort = require('serialport');
 
